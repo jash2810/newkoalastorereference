@@ -1,0 +1,101 @@
+extends ../layout
+
+block content
+	script(src='/javascripts/filter.js')
+	- var totalproducts = 0;
+	#demo.carousel.slide(data-ride='carousel')
+		//- Indicators
+		ul.carousel-indicators
+			li.active(data-target='#demo', data-slide-to='0')
+			li(data-target='#demo', data-slide-to='1')
+			li(data-target='#demo', data-slide-to='2')
+			li(data-target='#demo', data-slide-to='3')
+			li(data-target='#demo', data-slide-to='4')
+		//-  The slideshow
+		.carousel-inner
+			.carousel-item.active
+				img(src='/images/ui/slide/1.jpg', alt='koala2')
+			.carousel-item
+				img(src='/images/ui/slide/2.jpg', alt='koala3')
+			.carousel-item
+				img(src='/images/ui/slide/3.jpg', alt='koala3')
+			.carousel-item
+				img(src='/images/ui/slide/4.jpg', alt='koala3')
+			.carousel-item
+				img(src='/images/ui/slide/5.png', alt='koala3')
+		//- Left and right controls
+		a.carousel-control-prev(href='#demo', data-slide='prev')
+			span.carousel-control-prev-icon
+		a.carousel-control-next(href='#demo', data-slide='next')
+			span.carousel-control-next-icon
+	//- .slideshow-container
+	//- 	.mySlides.fade
+	//- 		img(src='/images/ui/slide/navratri-offer-mens-kurta.png', style='width: 100%;')
+	//- 		.text 
+	//- 	.mySlides.fade
+	//- 		img(src='/images/ui/slide/navratri-offer-mens-kurta.png', style='width: 100%;')
+	//- 		.text 
+	//- div(style='text-align: center;')
+	//- 	span.dot
+	//- 	span.dot
+	//- script(src='/javascripts/ui/slide/w3.js')
+	center
+		button(id='btn-filter',style='margin-top:50px;',onclick='filter()') Filter 
+			i.fa.fa-filter
+	div(id='filter-display')
+		.filters(style='margin-top: 50px;')
+			center
+				h5 FILTERS
+			form(action='/general/filtered/products', method='get')
+				.row
+					.col-3
+						label Categories
+					.col-3
+						label Prices
+					.col-3
+						label Color
+					.col-3
+						label Size
+				.row
+					.col-3
+						select(name='category', id='filter-category')
+							option(value='all') All
+							each c, index in categories
+								option(value=c) #{c}
+					.col-3
+						select(name='price', id='filter-price')
+							option(value='all') All
+							option(value='low to high') Low To High
+							option(value='high to low') High To Low
+					.col-3
+						select(name='color', id='filter-colors')
+							option(value='all') All
+							each c, index in colors
+								option(value=c) #{c}
+					.col-3
+						select(name='size', id='filter-sizes')
+							option(value='all') All
+							each s, index in sizes
+								option(value=s) #{s}
+					input(type='submit', name='apply', value='APPLY')
+		
+	.container
+		.row(style='position: relative; top: 20px;')
+			each c, index in categories
+				.col-md-12
+					h5.welcome-category #{categories[index]}
+				.row
+				each p, pindex in products
+					if (categories[index] == p.details.category)
+						.my-souled-card.col-md-3.col-6
+							a.my-souled-card-anchor(href='/general/product/'+p._id)
+								img.my-souled-card-image-normal(src="/images/products/"+p.property.image, style="width:100%")
+								img.my-souled-card-image-model(src='/images/products/hogwarts1.jpg', style='width: 100%;')
+								.my-souled-card-name #{p.details.name}
+								.row
+									.col-md-6.col-6
+										span.my-souled-card-type #{p.details.category}
+									.col-md-6.col-6
+										span.my-souled-card-price Rs. #{p.price.finalprice}/-
+	
+	input(type='hidden', id='totalproducts', name='totpro', value=totalproducts)

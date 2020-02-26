@@ -1,0 +1,52 @@
+extends ../layout
+
+block content
+	- var totalcategories = 0;
+	div.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			.col-md-4
+			.col-md-4.new-category
+				form(action='/admin/addcategory', method='post')
+					label New Category
+					br
+					input(type='text', name='category', placeholder='new category', required)
+					br
+					input.add-category-btn(type='submit', name='submit', value='add category')
+					//- table
+					//- 	tr
+					//- 		td New Category
+					//- 	tr
+					//- 		td
+					//- 			input(type='text', name='category', placeholder='new category')
+					//- 	tr
+					//- 		td
+					//- 			input(type='submit', name='submit', value='add category')
+				p want to 
+					a(href='/admin/name') manage name
+					span &nbsp;?
+		.row
+			.col-md-4
+				label Search Category  
+					i.fa.fa-search
+				input.search-item(type='text', name='search', placeholder='search here', id='search', onkeyup='searchCategory()')
+			.col-md-4
+			.col-md-4
+		div.row
+			each c, index in category
+				.col-md-1
+				div.col-sm-3.category-cards(id=c.name)
+					input(type='hidden', value=c.name, id='categoryname'+index)
+					- totalcategories = totalcategories + 1;
+					span #{index+1}: #{c.name}
+					form(action='/admin/deletecategory/'+c._id, method='post')
+						input(type='submit', name='delete', value='delete '+ c.name)
+			input(type='hidden', value=totalcategories, name='totalcategories', id='totalcategories')
+	script(src="/javascripts/admin/search-category.js")

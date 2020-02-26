@@ -1,0 +1,31 @@
+extends ../layout
+
+block content
+	script(src='/javascripts/numbercounter/numbercounter.js')
+	//- h2(class="timer count-title count-number" data-to="300" data-speed="1500")
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			.col-md-3.data-on-dashboard(data-aos='zoom-in-up', data-aos-duration=1500)
+				h4 Users
+				h5(class="timer count-title count-number" data-to=usercount, data-speed="1000")
+			.col-md-1
+			.col-md-3.data-on-dashboard(data-aos='zoom-in-up', data-aos-duration=1500)
+				h4 Products
+				h5(class="timer count-title count-number" data-to=productcount, data-speed="1000")
+			.col-md-1
+			.col-md-3.data-on-dashboard(data-aos='zoom-in-up', data-aos-duration=1500)
+				h4 Successfull Orders
+				h5(class="timer count-title count-number" data-to=sucordercount, data-speed="1000")
+			.col-md-1
+			.col-md-3.data-on-dashboard(data-aos='zoom-in-up', data-aos-duration=1500)
+				h4 Pending Orders
+				h5(class="timer count-title count-number" data-to=pendingordercount, data-speed="1000")
+			.col-md-1

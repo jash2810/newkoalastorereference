@@ -1,0 +1,144 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		h1.mb-5 Your Orders
+		each o in orders
+			if (o.status.delivered === 0 && o.status.canceled == 0)
+				//- h5 Order ID: #{o._id}
+				//- .col-md-12.mt-1
+				//- 	h5  &#8377; #{o.payment.finalprice}/-
+				each p in o.productlist
+					.product-display-page-order.mt-4.mb-4
+						.row
+							.col-md-2
+								img.productpg-image-order(src='/images/products/'+p.image)
+							.col-md-7
+								.row
+									.col-md-12
+										h5 #{p.name}
+								.row.mt-2
+									.col-md-4
+										span.size Color: &nbsp;
+										span.color #{p.color}
+									.col-md-4
+										span.size Quantity: &nbsp;
+										span.color #{p.quantity}
+									.col-md-4
+										span.size Size: &nbsp;
+										span.color #{p.size}
+				.row.mt-3
+					.col-md-6.mb-2
+						h5 Rs. #{o.payment.finalprice}/-
+						hr
+					.col-md-12.mb-2
+						h6 
+							b Delivery Address: 
+						span #{o.delivery.address.house} #{o.delivery.address.street1} #{o.delivery.address.street2} #{o.delivery.address.landmark} #{o.delivery.address.area} #{o.delivery.address.city} #{o.delivery.address.pincode} #{o.delivery.address.state} #{o.delivery.address.country}
+					.col-md-12
+						b status: To Be Delivered
+				.row.mt-3
+					.col-md-6
+					.col-md-6
+						h6 order id: #{o._id}
+				.row.mt-2
+					.col-md-12
+						if (o.status.canceled == 0)
+							a.mybuttonlinkremove(href='/users/cancel-order/'+o._id) Cancel Order
+				hr
+				br
+				br
+			if (o.status.delivered === 1 && o.status.canceled == 0)
+				//- h5 Order ID: #{o._id}
+				//- .col-md-12.mt-1
+				//- 	h5  &#8377; #{o.payment.finalprice}/-
+				each p in o.productlist
+					.product-display-page-order.mt-4.mb-4
+						.row
+							.col-md-2
+								img.productpg-image-order(src='/images/products/'+p.image)
+							.col-md-7
+								.row
+									.col-md-12
+										h5 #{p.name}
+									//- .col-md-12.mt-1
+									//- 	h5
+									//- 		del &#8377;#{p.originalprice}
+									//- 		br
+									//- 		h4(style='color: green;') &#8377;#{p.finalprice}
+								.row.mt-2
+									.col-md-4
+										span.size Color: &nbsp;
+										span.color #{p.color}
+									.col-md-4
+										span.size Quantity: &nbsp;
+										span.color #{p.quantity}
+									.col-md-4
+										span.size Size: &nbsp;
+										span.color #{p.size}
+				.row.mt-3
+					.col-md-6.mb-2
+						h5 Rs. #{o.payment.finalprice}/-
+						hr
+					.col-md-12.mb-2
+						h6
+							b Delivery Address: 
+						span #{o.delivery.address.house} #{o.delivery.address.street1} #{o.delivery.address.street2} #{o.delivery.address.landmark} #{o.delivery.address.area} #{o.delivery.address.city} #{o.delivery.address.pincode} #{o.delivery.address.state} #{o.delivery.address.country}
+					.col-md-12
+						b status: Delivered &nbsp;
+							i.fa.fa-check(style='color: green;')
+				.row.mt-3
+					.col-md-6
+					.col-md-6
+						h6 order id: #{o._id}
+				hr
+				br
+				br
+				//- h5 Order ID: #{o._id}
+				//- h5 Delivery Address: 
+				//- span #{o.delivery.address}
+				//- p
+				//- 	b Delivered
+				//- each p in o.productlist
+				//- 	.row.mt-5
+				//- 		.col-md-12
+				//- 			h2 #{p.name} - #{p.category}
+				//- 	.row
+				//- 		.col-md-5
+				//- 			img.productpg-image(src='/images/products/'+p.image)
+				//- 		.col-md-7
+				//- 			.row
+				//- 				.col-md-12
+				//- 					.product-details
+				//- 						table
+				//- 							tr
+				//- 								td(colspan='2') 
+				//- 									h6 #{p.name}
+				//- 							tr
+				//- 								td Color: 
+				//- 								td #{p.color}
+				//- 							tr
+				//- 								td Size: 
+				//- 								td #{p.size}
+				//- 							tr
+				//- 								td Price: 
+				//- 								td #{p.finalprice}/- &#8377;&nbsp;&nbsp;
+				//- 								- totalpayment = totalpayment + p.finalprice
+				//- 							tr
+				//- 								td
+				//- 								td
+				//- 									small
+				//- 										del #{p.originalprice}/- &#8377;
+				//- 										i &nbsp;#{p.discount}% off
+				//- //- each p in o.productlist
+				//- //- 	
+				//- hr
+				//- br

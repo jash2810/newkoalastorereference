@@ -1,0 +1,41 @@
+extends ../layout
+
+block content
+    .container(style='margin-top:130px;')
+        if (errMsg != '')
+            .error-msg
+                i.fa.fa-times-circle
+                span #{errMsg}
+        if (sucMsg != '')
+            .success-msg
+                i.fa.fa-check
+                span #{sucMsg}
+        .product-display-page
+            .row
+                .col-md-5
+                    img.productpg-image(src='/images/products/'+product.property.image)
+                .col-md-7.mt-3
+                    .row
+                       .col-6
+                            h5.product-display-page-name #{product.details.name}
+                        .col-6
+                            h4(style='').float-right &#8377;#{product.price.finalprice}
+                        .col-md-12
+                            h6 #{product.details.category}
+                        .col-md-12
+                            h6 #{product.property.color}
+                    hr
+                    .row.mt-4.mb-4
+                        .col-md-12
+                            h6 Size: #{product.property.size}
+                    hr
+                    .row
+                        .col-md-12
+                            form.new-signup(action='/users/buynow-checkout/'+product._id, method='post')
+                                .row
+                                    .col-md-6
+                                        label Quantity
+                                        input(type='number', min=1, max=product.property.quantity, value=1, name='qty')
+                                .row 
+                                    .col-md-12
+                                        input.new-signup-btn(type='submit', name='buynow-checkout', value='Checkout')

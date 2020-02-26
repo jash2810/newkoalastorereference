@@ -1,0 +1,78 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.product-display-page
+			.row
+				.col-md-5
+					img.productpg-image(src='/images/products/'+product.property.image)
+				.col-md-7
+					.row
+						.col-md-12
+							h2 #{product.details.name}
+						.col-md-12.mt-1
+							h5
+								del &#8377;#{product.price.originalprice}
+								span &nbsp;&nbsp;&nbsp;#{product.price.discount}% off
+								br
+								h4(style='color: green;') &#8377;#{product.price.finalprice}
+					.row.mt-2
+						.col-md-4
+							span.size Color: &nbsp;
+							span.color #{product.property.color}
+						.col-md-4
+							span.size Quantity: &nbsp;
+							span.color #{product.property.quantity}
+						.col-md-4
+							span.size Size: &nbsp;
+							span.color #{product.property.size}
+		//- p= product.details.name
+		//- img(src='/images/products/'+product.property.image, class='product-img')
+		//- p= product.details.category
+		//- p= product.property.color
+		//- p= product.property.size
+		//- p
+		//- 	del= product.price.originalprice
+		//- p= product.price.discount
+		//- p= product.price.finalprice
+		//- form(action='/admin/deleteproduct/'+product._id, method='post')
+		//- 	input(type='submit', name='submit', value='Delete '+product.details.name)
+		//- //- 
+		//- //- 
+		br
+		br
+		form(action='/admin/deleteproduct/'+product._id, method='post')
+			input(type='submit', name='submit', value='Delete '+product.details.name)
+		br
+		.new-signup
+			h3 Edit #{product.details.name}
+			form(action='/admin/editproduct/'+product._id, method='post', encType='multipart/form-data')
+				.row
+					.col-md-4
+						label Color:
+						input(type='text', name='color', value=product.property.color)
+					.col-md-4
+						label Size:
+						input(type='text', name='size', value=product.property.size)
+					.col-md-4
+						label Image:
+						input(type='file', name='img')
+				.row
+					.col-md-4
+						label Original Price:
+						input(type='text', name='oprice', value=product.price.originalprice, id='oprice', onkeyup='FindDiscount()')
+					.col-md-4
+						label Discount:
+						input(type='text', name='discount', value=product.price.discount, id='discount', onkeyup='FindDiscount()')
+					.col-md-4(style='position:relative;top:30px;')
+						label Final Price:
+						span(id='fprice', value=product.price.finalprice, style='position:relative;left:-150px;') #{product.price.finalprice}
+				input.new-signup-btn.mt-5(type='submit', name='submit', value='Update '+product.details.name)

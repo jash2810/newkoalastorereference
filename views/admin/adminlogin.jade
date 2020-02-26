@@ -1,0 +1,68 @@
+extends ../layout
+
+block content
+	div(class='container', style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			.col-md-3
+			.col-md-6
+				.new-login-form
+					center
+						form(name='login', action='/login/adminlogin', method='post')
+							img(src='/images/logo/koalalogo.png')
+							h3 Please Login
+							input(type='text', name='adminname', placeholder='Adminname')
+							br
+							input(type='password', name='password', placeholder='Password')
+							br
+							input.new-login-btn(type='submit', name='login', value='login')
+							br
+		//- form.myloginform.mt-5(name='login', action='/login/adminlogin', method='post')
+		//- 	h3 Admin Login
+		//- 	.loginformelements
+		//- 		.container
+		//- 			.row
+		//- 				.col-md-3.float-left
+		//- 					label Adminname:
+		//- 				.col-md-9
+							//- input(type='text', name='adminname', placeholder='Adminname')
+		//- 			.row
+		//- 				.col-md-3.float-left
+		//- 					label Password:
+		//- 				.col-md-9
+							//- input(type='password', name='password', placeholder='Password')
+		//- 			.row
+		//- 				.col-md-3
+		//- 				.col-md-6
+		//- 					center
+		//- 						input.mybutton(type='submit', name='login', value='Login')
+		//- 				.col-md-3
+		//- div(class='row center-page-120')
+		//- 	div(class='col-sm')
+		//- 	div(class='col-sm-5')
+		//- 		center
+		//- 			h4 Admin Login
+		//- 			form(name='login', action='/login/adminlogin', method='post')
+		//- 				table
+		//- 					tr
+		//- 						td Username:
+		//- 						td
+		//- 							input(type='text', name='adminname', placeholder='adminname')
+		//- 					tr
+		//- 						td Password:
+		//- 						td
+		//- 							input(type='password', name='password', placeholder='password')
+		//- 					tr
+		//- 						td(colspan='2')
+		//- 							center		
+		//- 								input(type='submit', name='submit', value='login', class='btn btn-success')
+		//- 			span(class='my-error-msg')= errMsg
+		//- 			span(class='my-success-msg')= sucMsg 
+		//- 	div(class='col-sm')

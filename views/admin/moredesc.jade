@@ -1,0 +1,34 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		h5 Add More Description for #{product.details.name} 
+			i #{product.details.category}
+		each d in description
+			p 
+				h5 #{d.title}
+			p #{d.content}
+			form(action='/admin/delete-description/'+product._id, method='post')
+				input(type='hidden', name='title', value=d.title)
+				input(type='submit', name='delete', value='delete')
+		hr
+		.row
+			.col-md-12
+				.new-signup
+					form(action='/admin/add-description/'+product._id, method='post')
+						label Title: 
+						input(type='text', name='title', placeholder='add title here', required)
+						br
+						label Content: 
+						textarea(name='content', placeholder='add content here', required)
+						br
+						input.new-signup-btn(type='submit', name='submit', value='Add Description')
+		a(href='/admin/products') Back To Products

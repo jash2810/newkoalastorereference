@@ -1,0 +1,73 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		h1 Orders:
+		.row(id='cod-orders')
+			button.new-signup-btn(type='button', onclick='showPaytmOrders()') Show Paytm Orders
+			table.mytable-order.table-responsive-sm
+				tr
+					th Order No.
+					th Name
+					th Email
+					th Contact
+					th Address
+					th Products
+					th Payment
+					th Cancel Status
+				each o, index in orders
+					if(o.paymenttype.cod)
+						tr
+							td #{index+1}
+							td #{o.userdetails.fullname}
+							td #{o.contact.email}
+							td #{o.contact.contactNo}
+							td #{o.delivery.address.house} #{o.delivery.address.street1} #{o.delivery.address.street2} #{o.delivery.address.landmark} #{o.delivery.address.area} #{o.delivery.address.city} #{o.delivery.address.pincode} #{o.delivery.address.state} #{o.delivery.address.country}
+							td 
+								a(href='/admin/view-ordered-products/'+o._id) View Products
+							td #{o.payment.finalprice}
+							if (o.status.canceled == 0)
+								td
+							if (o.status.canceled == 1)
+								td Canceled
+		.row(id='paytm-orders')
+			button.new-signup-btn(type='button', onclick='showCODOrders()') Show COD Orders
+			table.mytable-order.table-responsive-sm
+				tr
+					th Order No.
+					th Name
+					th Email
+					th Contact
+					th Address
+					th Products
+					th Payment
+					th Paytm Status
+					th Cancel Status
+				each o, index in orders
+					if(o.paymenttype.paytm.ispaytm)
+						tr
+							td #{index+1}
+							td #{o.userdetails.fullname}
+							td #{o.contact.email}
+							td #{o.contact.contactNo}
+							td #{o.delivery.address.house} #{o.delivery.address.street1} #{o.delivery.address.street2} #{o.delivery.address.landmark} #{o.delivery.address.area} #{o.delivery.address.city} #{o.delivery.address.pincode} #{o.delivery.address.state} #{o.delivery.address.country}
+							td 
+								a(href='/admin/view-ordered-products/'+o._id) View Products
+							td #{o.payment.finalprice}
+							if (o.paymenttype.paytm.verified)
+								td(style='color:green;') Verified
+							else
+								td(style='color:blue;') Not Verified
+							if (o.status.canceled == 0)
+								td
+							if (o.status.canceled == 1)
+								td Canceled
+	script(src='/javascripts/admin/paytm-orders.js')

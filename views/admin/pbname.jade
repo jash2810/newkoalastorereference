@@ -1,0 +1,53 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			each p, index in products
+				.my-souled-card.col-md-3.col-6
+					a.my-souled-card-anchor(href='/admin/product/'+p._id)
+						img.my-souled-card-image-normal(src="/images/products/"+p.property.image, style="width:100%")
+						img.my-souled-card-image-model(src='/images/products/hogwarts1.jpg', style='width: 100%;')
+						.my-souled-card-name #{p.details.name}
+						.row
+							.col-md-6.col-6
+								span.my-souled-card-type T-shirts
+							.col-md-6.col-6
+								span.my-souled-card-price Rs. #{p.price.finalprice}/-
+				//- div(class="make-3D-space my-3dcard", data-aos='zoom-in-up', data-aos-duration=600)
+				//- 	div(class="product-card")
+				//- 		div(class="product-front")
+				//- 			div(class='shadow')
+				//- 			img(src="/images/products/"+p.property.image, alt="", style='width: 100%;')
+				//- 			div(class="image_overlay")
+				//- 			a(href='/admin/product/'+p._id)
+				//- 				div(class="view_details") View details
+				//- 			div(class="stats")
+				//- 				div(class="stats-container")
+				//- 					span() #{p.details.name}
+				//- 					span.float-right
+				//- 						del &#8377; #{p.price.originalprice}
+				//- 						br
+				//- 						span.final-price-3dcard &#8377; #{p.price.finalprice}
+				//- 					.product-options
+				//- 					.my-product-details-3dcard
+				//- 						b Color: 
+				//- 							span #{p.property.color}
+				//- 						br       
+				//- 						b Size:                 		
+				//- 							span #{p.property.size}
+				//- .col-sm-4
+				//- 	a(href='/admin/product/'+p._id)
+				//- 		span Productid: #{index+1}
+				//- 		br
+				//- 		span Product name : #{p.details.name}
+				//- 		br
+				//- 		img.product-img(src='/images/products/'+p.property.image)

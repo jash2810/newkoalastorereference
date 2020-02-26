@@ -1,0 +1,14 @@
+h2 User #{order.userdetails.fullname} has cancelled an order.
+h4 Order ID: #{order._id}
+p 
+	b Products in canceled order
+table.border
+	tr
+		th(style='padding: 10px;') Product
+		th(style='padding: 10px;') Quantity
+		th(style='padding: 10px;') Price
+	each p in order.productlist
+		tr
+			td(style='padding: 10px;') #{p.name}
+			td(style='padding: 10px;') #{p.quantity}
+			td(style='padding: 10px;') #{p.finalprice}

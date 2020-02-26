@@ -1,0 +1,66 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+	h1 Order Items: 
+	h5 Order Id: #{orderid}
+	//- table.mytable-order.table-responsive-sm(style='width: 100%;')
+	.container
+		each p in products
+			.row.mt-5
+				.col-md-12
+					h2 #{p.name}
+			.row
+				.col-md-5
+					img.productpg-image(src='/images/products/'+p.image)
+				.col-md-7
+					.row
+						.col-md-12
+							.product-details
+								table
+									tr
+										td(colspan='2') 
+											h6 #{p.name}
+									tr
+										td Color: 
+										td #{p.color}
+									tr
+										td Size: 
+										td #{p.size}
+									tr
+										td Price: 
+										td #{p.finalprice}/- &#8377;&nbsp;&nbsp;
+										- totalpayment = totalpayment + p.finalprice
+									tr
+										td
+										td
+											small
+												del #{p.originalprice}/- &#8377;
+	br
+	br
+	center
+		h2 Total Amount: #{finalprice}
+		if (ispaytm)
+			if (cancelstatus == 1)
+				p
+					b Note: This Order has been canceled
+				a(href='/admin/delivered/'+orderid, style='width: 200px;').mybuttonlink Remove
+			if (cancelstatus == 0)
+				a(href='/admin/delivered/'+orderid, style='width: 200px;').mybuttonlink Delivered
+			if(!paytmverified) 
+				a(href='/admin/verify-paytm-order/'+orderid, style='width: 200px;').mybuttonlink Verify
+		if (!ispaytm)
+			if (cancelstatus == 1)
+				p
+					b Note: This Order has been canceled
+				a(href='/admin/delivered/'+orderid, style='width: 200px;').mybuttonlink Remove
+			if (cancelstatus == 0)
+				a(href='/admin/delivered/'+orderid, style='width: 200px;').mybuttonlink Delivered

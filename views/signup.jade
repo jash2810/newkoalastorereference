@@ -1,0 +1,101 @@
+extends layout
+
+block content
+	div(class='container', style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			.col-md-12
+				.new-signup
+					form(name='signup', action='/login/signup', method='post')
+						center
+							img(src='/images/logo/koalalogo.png')
+							h3 Sign Up
+						.row(style='text-align: center;')
+							.col-md-6
+								//- label.signup-label-100 Name: 
+								input(type='text', name='name', placeholder='Full Name',pattern='[a-zA-Z]+[ ]?[a-zA-Z]*',title='Only alphabets are allowed with maximum one space',required)
+								//- label.signup-label-100 Email: 
+								input(type='email', name='email', placeholder='youremail@example.com',required)
+								//- label.signup-label-100 Password: 
+								input(type='password', name='password', id='password1', placeholder='Password', onkeyup='checkPasswordFunc()',pattern='(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@!_]).{8,}',title='Minimum 8 characters,At least one alphabet,one digit,one symbol(@,! or _) required',required)
+								//- label.signup-label-100 Confirm Password: 
+									span(id='passwordMatchErr', style='color: white;font-size:14px;')
+								input(type='password', name='password1', id='password2', placeholder='Re-enter Password', onkeyup='checkPasswordFunc()')
+								br
+								.container.float-left
+									span.password-match(id='password-match-msg') * Password Doesn't Match !
+								br
+								//- label.signup-label-100 Contact 1: 
+								input(type='text', name='contact1', placeholder='Contact No. 1',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed',required)
+								//- label.signup-label-100 Contact 2: 
+								input(type='text', name='contact2', placeholder='Contact No. 2',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed')
+							.col-md-6
+								//- label.signup-label-100 House No: 
+								input(type='text', name='house', placeholder='House Number')
+								//- label.signup-label-50 Street 1
+								input.new-signup-half-input(type='text', name='street1', placeholder='Enter street 1')
+								//- label.signup-label-50 Street 2
+								input.new-signup-half-input(type='text', name='street2', placeholder='Enter Street 2')
+								//- label.signup-label-50 Landmark
+								input(type='text', name='landmark', placeholder='Enter nearby landmark')
+								//- label.signup-label-50 Area
+								input.new-signup-half-input(type='text', name='area', placeholder='Enter Area')
+								//- label.signup-label-50 Pincode: 
+								input.new-signup-half-input(type='text', name='pincode', placeholder='Enter Pincode')
+								//- label.signup-label-50 City
+								input(type='text', name='city', placeholder='Enter City')
+								//- label.signup-label-50 State
+								input.new-signup-half-input(type='text', name='state', placeholder='Enter State', value='Gujarat', disabled)
+								//- label.signup-label-50 Country
+								input.new-signup-half-input(type='text', name='country', placeholder='Enter Country', value='India', disabled)
+							.col-md-12
+								center
+									input.new-signup-btn(type='submit', name='signup', value='signup', id='signup-btn-id')
+				center
+					span already have an account ? 
+						a(href='/login') Login 
+	script(src="/javascripts/signup/password-match.js")
+		//- .signup
+			//- form(name='signup', action='/login/signup', method='post')
+			//- 	h2 Sign Up
+				//- label Name: 
+			//- 	input(type='text', name='name', placeholder='Full Name',pattern='[a-zA-Z]+[ ]?[a-zA-Z]*',title='Only alphabets are allowed with maximum one space',required)
+				//- label Email: 
+			//- 	input(type='email', name='email', placeholder='youremail@example.com',required)
+				//- label Password: 
+			//- 	input(type='password', name='password', id='password1', placeholder='Password', onkeyup='checkPasswordFunc()',pattern='(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[@!_]).{8,}',title='Minimum 8 characters,At least one alphabet,one digit,one symbol(@,! or _) required',required)
+				//- label Confirm Password: 
+			//- 		span(id='passwordMatchErr', style='color: white;font-size:14px;')
+			//- 	input(type='password', name='password1', id='password2', placeholder='Re-enter Password', onkeyup='checkPasswordFunc()')
+				//- label Contact 1: 
+			//- 	input(type='text', name='contact1', placeholder='Contact No. 1',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed',required)
+				//- label Contact 2: 
+			//- 	input(type='text', name='contact2', placeholder='Contact No. 2',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed')
+				//- label Address: 
+				//- label House No: 
+			//- 	input(type='text', name='house', placeholder='House Number')
+				//- label Street 1
+			//- 	input(type='text', name='street1', placeholder='Enter street 1')
+				//- label Street 2
+			//- 	input(type='text', name='street2', placeholder='Enter Street 2')
+				//- label Landmark
+			//- 	input(type='text', name='landmark', placeholder='Enter nearby landmark')
+				//- label Area
+			//- 	input(type='text', name='area', placeholder='Enter Area')
+				//- label City
+			//- 	input(type='text', name='city', placeholder='Enter City')
+				//- label Pincode: 
+			//- 	input(type='text', name='pincode', placeholder='Enter Pincode')
+				//- label State
+			//- 	input(type='text', name='state', placeholder='Enter State', value='Gujarat', disabled)
+				//- label Country
+			//- 	input(type='text', name='country', placeholder='Enter Country', value='India', disabled)
+	//- 		//- 	input.signupbtn(type='submit', name='signup', value='signup')
+	//- script(src='/javascripts/ui/signup.js')

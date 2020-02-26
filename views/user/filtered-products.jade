@@ -1,0 +1,142 @@
+extends ../layout
+
+block content
+	script(src='/javascripts/filter.js')
+	div(style='margin-top: 130px;')
+		center
+			button(id='btn-filter',style='margin-top:50px;',onclick='filter()') Filter 
+				i.fa.fa-filter
+		div(id='filter-display')
+			.filters(style='margin-top: 50px;')
+				center
+					h5 FILTERS
+				form(action='/users/filtered/products', method='get')
+					.row
+						.col-3
+							label Categories
+						.col-3
+							label Prices
+						.col-3
+							label Color
+						.col-3
+							label Size
+					.row
+						.col-3
+							select(name='category', id='filter-category')
+								option(value='all') All
+								each c, index in categories
+									option(value=c) #{c}
+						.col-3
+							select(name='price', id='filter-price')
+								option(value='all') All
+								option(value='low to high') Low To High
+								option(value='high to low') High To Low
+						.col-3
+							select(name='color', id='filter-colors')
+								option(value='all') All
+								each c, index in colors
+									option(value=c) #{c}
+						.col-3
+							select(name='size', id='filter-sizes')
+								option(value='all') All
+								each s, index in sizes
+									option(value=s) #{s}
+						input(type='submit', name='apply', value='APPLY')
+	.container(id='main-product-display', style='')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row(style='position: relative; top: 100px;')
+			.modal.fade(id='myModal', role='dialog', tabindex="-1", aria-labelledby="exampleModalCenterTitle", aria-hidden="true")
+				.modal-dialog.modal-dialog-centered.modal-lg
+					.modal-content
+						.modal-header
+							h4.modal-title Filters
+							button.close(type='button', data-dismiss="modal") &times;
+						.modal-body
+							.filters
+								form(action='/users/filtered/products', method='get')
+									.row
+										.col-md-3
+											label Categories
+											select(name='category', id='filter-category')
+												option(value='all') All
+												each c, index in categories
+													option(value=c) #{c}
+										.col-md-3
+											label Prices
+											select(name='price', id='filter-price')
+												option(value='all') All
+												option(value='low to high') Low To High
+												option(value='high to low') High To Low
+										.col-md-3
+											label Color
+											select(name='color', id='filter-colors')
+												option(value='all') All
+												each c, index in colors
+													option(value=c) #{c}
+										.col-md-3
+											label Size
+											select(name='size', id='filter-sizes')
+												option(value='all') All
+												each s, index in sizes
+													option(value=s) #{s}
+									.row
+										input(type='submit', name='apply', value='APPLY')
+			each p, pindex in products
+				.my-souled-card.col-md-3.col-6
+					a.my-souled-card-anchor(href='/users/product/'+p._id)
+						img.my-souled-card-image-normal(src="/images/products/"+p.property.image, style="width:100%")
+						img.my-souled-card-image-model(src='/images/products/hogwarts1.jpg', style='width: 100%;')
+						.my-souled-card-name #{p.details.name}
+						.row
+							.col-md-6.col-6
+								span.my-souled-card-type #{p.details.category}
+							.col-md-6.col-6
+								span.my-souled-card-price Rs. #{p.price.finalprice}/-
+				//- div(class="make-3D-space my-3dcard", data-aos='zoom-in-up', data-aos-duration=600)
+				//- 	div(class="product-card")
+				//- 		div(class="product-front")
+				//- 			div(class='shadow')
+				//- 			img(src="/images/products/"+p.property.image, alt="", style='width: 100%;')
+				//- 			div(class="image_overlay")
+				//- 			a(href='/users/product/'+p._id)
+				//- 				div(class="view_details") View details
+				//- 			div(class="stats")
+				//- 				div(class="stats-container")
+				//- 					span() #{p.details.name}
+				//- 					span.float-right
+				//- 						del &#8377; #{p.price.originalprice}
+				//- 						br
+				//- 						span.final-price-3dcard &#8377; #{p.price.finalprice}
+				//- 					.product-options
+				//- 					.my-product-details-3dcard
+				//- 						b Color: 
+				//- 							span #{p.property.color}
+				//- 						br       
+				//- 						b Size:                 		
+				//- 							span #{p.property.size}
+				//- .mycard(id='product-card-'+pindex)
+				//- 	img(src="/images/products/"+p.property.image, style="width:100%")
+				//- 	center
+				//- 		h3 #{p.details.name}
+				//- 	p
+				//- 		span Color: #{p.property.color}
+				//- 		br
+				//- 		span Size: #{p.property.size}
+				//- 		br
+				//- 	p
+				//- 		span Price: &nbsp;
+				//- 			del #{p.price.originalprice}/- &#8377;
+				//- 			span &nbsp; #{p.price.discount}% off
+				//- 			br
+				//- 			center
+				//- 				span
+				//- 					b #{p.price.finalprice}/- &#8377;
+				//- 					input(type='hidden', name='finalprice', value=p.price.finalprice, id='product-price-'+pindex)
+					//- a(class="mybuttonlink", href='/users/product/'+p._id) view details

@@ -1,0 +1,110 @@
+extends ../layout
+
+block content
+	- var totalnames = 0;
+	div.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			.col-md-4
+			.col-md-4.new-category
+				form(action='/admin/addname', method='post')
+					label New Name
+					br
+					input(type='text', name='name', placeholder='new category', required)
+					br
+					select(name='category', required)
+						option(disabled, selected) Select Category
+						each c in category
+							option(value=c.name) #{c.name}
+					br
+					input.add-category-btn(type='submit', name='submit', value='add name')
+					//- table
+					//- 	tr
+					//- 		td New Category
+					//- 	tr
+					//- 		td
+					//- 			input(type='text', name='category', placeholder='new category')
+					//- 	tr
+					//- 		td
+					//- 			input(type='submit', name='submit', value='add category')
+				p want to 
+					a(href='/admin/products') manage products
+					span &nbsp;?
+		.row
+			.col-md-4
+				label Search Name  
+					i.fa.fa-search
+				input.search-item(type='text', name='search', placeholder='search here', id='search', onkeyup='searchName()')
+			.col-md-4
+			.col-md-4
+		div.row
+			each n, index in name
+				.col-md-1
+				div.col-sm-3.category-cards(id=n.name)
+					input(type='hidden', value=n.name, id='namename'+index)
+					- totalnames = totalnames + 1;
+					span #{index+1}: #{n.name}
+					form(action='/admin/deletename/'+n._id, method='post')
+						input(type='submit', name='delete', value='delete '+ n.name)
+			input(type='hidden', value=totalnames, name='totalnames', id='totalnames')
+	script(src="/javascripts/admin/search-name.js")
+//- extends ../layout
+
+//- block content
+//- 	- var totalnames = 0;
+//- 	div.container(style='margin-top: 130px;')
+//- 		if (errMsg != '')
+//- 			.error-msg
+//- 				i.fa.fa-times-circle 
+//- 				span  #{errMsg}
+//- 		if (sucMsg != '')
+//- 			.success-msg
+//- 				i.fa.fa-check
+//- 				span  #{sucMsg}
+//- 		.row
+//- 			.col-md-4
+//- 			.col-md-4
+//- 				form(action='/admin/addname', method='post')
+//- 				table
+//- 					tr
+//- 						td New Name
+//- 						td
+//- 							input(type='text', name='name', placeholder='new name')
+//- 					tr
+//- 						td Category
+//- 						td
+							//- select(name='category')
+							//- 	option(disabled, selected) Select Category
+							//- 	each c in category
+							//- 		option(value=c.name) #{c.name}
+//- 					tr
+//- 						td
+//- 							input(type='submit', name='submit', value='add name')
+//- 			p want to 
+//- 				a(href='/admin/products') manage products
+//- 				span &nbsp;?
+//- 		.row
+//- 			.col-md-4
+//- 				label Search Name  
+//- 					i.fa.fa-search
+//- 				input.search-item(type='text', name='search', placeholder='search here', id='search', onkeyup='searchName()')
+//- 			.col-md-4
+//- 			.col-md-4
+//- 		div.row
+//- 			each n, index in name
+//- 				.col-md-1
+//- 				div.col-sm-3.category-cards(id=n.name)
+//- 					input(type='hidden', value=n.name, id='namename'+index)
+//- 					- totalnames = totalnames + 1;
+//- 					span #{index+1}: #{n.name} (#{n.category})
+//- 					form(action='/admin/deletename/'+n._id, method='post')
+//- 						input(type='submit', name='delete', value='delete '+ n.name)
+//- 			input(type='text', value=totalnames, name='totalnames', id='totalnames')
+//- 	script(src="/javascripts/admin/search-name.js")	

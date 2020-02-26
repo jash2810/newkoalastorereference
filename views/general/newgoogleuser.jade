@@ -1,0 +1,48 @@
+extends ../layout
+
+block content
+	div(class='container', style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			.col-md-12
+				.new-signup
+					form(name='signup', action='/auth/newgoogleuser', method='post')
+						center
+							img(src='/images/logo/koalalogo.png')
+							h3 Give Your Additional Informations
+						.row(style='text-align: center;')
+							.col-md-6
+								//- label.signup-label-100 Contact 1: 
+								input(type='text', name='contact1', placeholder='Contact No. 1',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed',required)
+								//- label.signup-label-100 Contact 2: 
+								input(type='text', name='contact2', placeholder='Contact No. 2',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed')
+								input(type='hidden', name='googleid', value=user.googleid)
+							.col-md-6
+								//- label.signup-label-100 House No: 
+								input(type='text', name='house', placeholder='House Number')
+								//- label.signup-label-50 Street 1
+								input.new-signup-half-input(type='text', name='street1', placeholder='Enter street 1')
+								//- label.signup-label-50 Street 2
+								input.new-signup-half-input(type='text', name='street2', placeholder='Enter Street 2')
+								//- label.signup-label-50 Landmark
+								input(type='text', name='landmark', placeholder='Enter nearby landmark')
+								//- label.signup-label-50 Area
+								input.new-signup-half-input(type='text', name='area', placeholder='Enter Area')
+								//- label.signup-label-50 Pincode: 
+								input.new-signup-half-input(type='text', name='pincode', placeholder='Enter Pincode')
+								//- label.signup-label-50 City
+								input(type='text', name='city', placeholder='Enter City')
+								//- label.signup-label-50 State
+								input.new-signup-half-input(type='text', name='state', placeholder='Enter State', value='Gujarat', disabled)
+								//- label.signup-label-50 Country
+								input.new-signup-half-input(type='text', name='country', placeholder='Enter Country', value='India', disabled)
+							.col-md-12
+								center
+									input.new-signup-btn(type='submit', name='signup', value='Add Information')

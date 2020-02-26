@@ -1,0 +1,165 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		div.new-profile(id='box1')
+			h2(style='padding: 10px;') Your Details
+			label.new-info-label Email:
+			.new-info #{user.personal.email}
+			label.new-info-label Address: 
+			.new-info #{user.delivery.address.house} #{user.delivery.address.street1} #{user.delivery.address.street2} #{user.delivery.address.landmark} #{user.delivery.address.area} #{user.delivery.address.city} #{user.delivery.address.pincode} #{user.delivery.address.state} #{user.delivery.address.country} 
+			label.new-info-label Contact No. 
+			.new-info #{user.contact.contactNo1}
+			button.new-signup-btn(type='button', onclick='ChangeAddress()') Change Details
+		div.new-profile(id='box2')
+			h2 Change Address
+			form(id='changedetailsid', action='/users/change-details', method='post')
+				label.new-info-label Addresses: 
+				br
+				each a, index in user.address
+					input(type='radio', name='addressindex', value=index)
+					//- input(type='hidden', name='street1', value=a.street1, required)
+					label.addresses #{a.house} #{a.street1} #{a.street2} #{a.landmark} #{a.area} #{a.city} #{a.pincode} #{a.state} #{a.country}
+					br
+				.mt-3
+					.row
+						input.new-signup-btn.mt-1(type='submit', name='submit', value='Done')
+						button.mt-1(type='button', name='addaddress', value='Add Address', onclick='AddAddress()').new-signup-btn Add Address
+						button.mt-1(type='button', name='cancel', value='cancel', onclick='Cancel()').new-signup-btn Cancel
+		div.new-profile(id='box3')
+			h2 Add New Address
+			form.new-signup(action='/users/newaddress', method='post')
+				.row
+					.col-md-4
+						label House No: 
+						input(type='text', name='house', placeholder='House Number', required)
+				.row
+					.col-md-4
+						label Street 2
+						input(type='text', name='street2', placeholder='Enter Street 2', required)
+					.col-md-4
+						label Street 1
+						input(type='text', name='street1', placeholder='Enter street 1', required)
+				.row
+					.col-md-3
+						label Landmark
+						input(type='text', name='landmark', placeholder='Enter nearby landmark', required)
+					.col-md-3
+						label Area
+						input(type='text', name='area', placeholder='Enter Area', required)
+					.col-md-3
+						label City
+						input(type='text', name='city', placeholder='Enter City', required)
+					.col-md-3
+						label Pincode: 
+						input(type='text', name='pincode', placeholder='Enter Pincode', required)
+				.row
+					.col-md-4
+						label State
+						input(type='text', name='state', placeholder='Enter State', value=user.delivery.address.state, disabled)
+					.col-md-4
+						label Country
+						input(type='text', name='country', placeholder='Enter Country', value=user.delivery.address.country, disabled)
+				.row.mt-3
+					input.new-signup-btn(type='submit', name='newaddresssubmit', value='add new address')
+					button.new-signup-btn(type='button', name='cancel', value='cancel', onclick='Cancel()') Cancel
+		.coupons.mt-5
+			form.new-signup(action='/users/applied-coupon-code', method='post')
+				.row
+					.col-md-12
+						h5 Have a Coupon Code? 
+					.col-md-4
+						input(type='text', name='couponcode', placeholder='Enter Coupon Code here', required)
+					.col-md-12
+						input.new-signup-btn(type="submit", value='Apply', name='apply')
+			button.new-signup-btn(type='button', name='show coupons', onclick='showCoupons()', id='show-btn') Show Coupons Codes
+			button.new-signup-btn(type='button', name='show coupons', onclick='hideCoupons()', id='hide-btn') Hide Coupons Codes
+			div.mt-4(id='couponcodes')
+				each co, coindex in coupons
+					.row.border
+						.col-md-12
+							h6 #{coindex+1}. #{co.coupendetails.coupencode}
+						.col-md-12
+							p
+								i #{co.coupendetails.description}
+		script(src="/javascripts/coupen/show-coupons.js")
+	.payment.container
+		.row
+			.col-md-12
+				label.payment-label Select Payment Method
+			.col-md-3
+				select.payment-select(name='payment-method', id='payment-method', onchange='selectPaymentMode()')
+					option(value="cod") Cash On Delivery
+					option(value="paytm") Paytm
+		.row(id='paytm')
+			.row
+				.col-md-12.mt-5
+					h4 Payment Method: 
+						span(style='color: #01b9f5;') Paytm &nbsp;
+							i.fa.fa-check
+			.row
+				.col-md-12
+					span(style='color: red;') *Please return to this page for confirming your order after you do your payment through paytm 
+			.row
+				.col-md-12.mt-3
+					h5 Payment Amount: #{finalpayment}/- &#8377;
+			.row
+				.col-md-12.mt-3
+					a.paytm-btn-link(href='http://p-y.tm/FiO4-hL', target='_blank') Pay Through Paytm &nbsp;
+						i.fa.fa-arrow-right
+			.row
+				.col-md-12
+					form.new-signup(action='/users/order-paytm/'+user._id, method='post')
+						input(type='hidden', name='finalpayment', value=finalpayment)
+						input(type='hidden', name='fullname', value=user.personal.fullname)
+						input(type='hidden', name='house', value=user.delivery.address.house)
+						input(type='hidden', name='street1', value=user.delivery.address.street1)
+						input(type='hidden', name='street2', value=user.delivery.address.street2)
+						input(type='hidden', name='landmark', value=user.delivery.address.landmark)
+						input(type='hidden', name='area', value=user.delivery.address.area)
+						input(type='hidden', name='city', value=user.delivery.address.city)
+						input(type='hidden', name='pincode', value=user.delivery.address.pincode)
+						input(type='hidden', name='state', value=user.delivery.address.state)
+						input(type='hidden', name='country', value=user.delivery.address.country)
+						input(type='hidden', name='email', value=user.personal.email)
+						input(type='hidden', name='contact', value=user.delivery.contactNo)
+						input(type='hidden', name='type', value='paytm')
+						.row.mt-5
+							.col-md-5
+								label Paytm Number You Paid Through
+								input(type='text', name='paytmnumber',placeholder='Paytm Number', required)
+						input(type='submit', name='order', value='order').new-signup-btn
+						br
+						span(style='color:green;') *Your order will be verified with your paytm payment. Once its done we will send you a confirmation mail :)
+		.row(id='cod')
+			.row
+				.col-md-12.mt-5
+					h4 Payment method: Cash On Delivery
+			.row
+				.col-md-12.mt-2
+					h5 Payable Amount: #{finalpayment}/- &#8377;
+			form(action='/users/order-cod/'+user._id, method='post')
+				input(type='hidden', name='finalpayment', value=finalpayment)
+				input(type='hidden', name='fullname', value=user.personal.fullname)
+				input(type='hidden', name='house', value=user.delivery.address.house)
+				input(type='hidden', name='street1', value=user.delivery.address.street1)
+				input(type='hidden', name='street2', value=user.delivery.address.street2)
+				input(type='hidden', name='landmark', value=user.delivery.address.landmark)
+				input(type='hidden', name='area', value=user.delivery.address.area)
+				input(type='hidden', name='city', value=user.delivery.address.city)
+				input(type='hidden', name='pincode', value=user.delivery.address.pincode)
+				input(type='hidden', name='state', value=user.delivery.address.state)
+				input(type='hidden', name='country', value=user.delivery.address.country)
+				input(type='hidden', name='email', value=user.personal.email)
+				input(type='hidden', name='contact', value=user.delivery.contactNo)
+				input(type='hidden', name='type', value='cod')
+				input(type='submit', name='order', value='order').new-signup-btn
+	script(src='/javascripts/checkout.js')

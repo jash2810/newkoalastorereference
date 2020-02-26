@@ -1,0 +1,20 @@
+h1(style='font-family: Century Gothic;color: green;') #{fullname}, You have ordered successfully !
+h3 Your Order Details are :
+br
+span Order Id : 
+	b #{orderid}
+table.border
+	tr
+		th(style='padding: 10px;') Product
+		th(style='padding: 10px;') Quantity
+		th(style='padding: 10px;') Price
+	each c in cartproducts
+		tr
+			td(style='padding: 10px;') #{c.name}
+			td(style='padding: 10px;') #{c.quantity}
+			td(style='padding: 10px;') #{c.finalprice}
+	tr
+		td(colspan='3')
+			h3 Payment Amount: #{payment}
+h2 Your order will be delivered at
+h3 #{address.house} #{address.street1} #{address.street2} #{address.landmark} #{address.area} #{address.city} #{address.pincode} #{address.state} #{address.country}

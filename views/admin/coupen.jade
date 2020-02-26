@@ -1,0 +1,115 @@
+extends ../layout
+
+block content
+    div.container(style='margin-top: 130px;')
+        if (errMsg != '')
+            .error-msg
+                i.fa.fa-times-circle 
+                span  #{errMsg}
+        if (sucMsg != '')
+            .success-msg
+                i.fa.fa-check
+                span  #{sucMsg}
+        .row
+            .col-md-12
+                .new-signup
+                    form(action='/admin/addcoupen', method='post')
+                        h3 Add Coupen Code
+                        .row
+                            .col-md-4
+                                input(type='text', name='coupenname', placeholder='Insert Coupen Name Here', required)
+                        .row
+                            .col-md-8
+                                textarea(type='text', name='description', placeholder='enter details of the coupen code here...',required, rows=12)
+                        .row
+                            .col-md-6
+                                input(type='radio', name='type',onclick="yesnoCheck();",value='percentage',id='percentage-radio', style='width:20px;', required)
+                                span percentage
+                                br
+                                input(type='radio',name='type',onclick="yesnoCheck();",value='cash',id='cash-radio', style='width:20px;', required)
+                                span cash
+                        .row
+                            .col-md-6
+                                div(id='percentage')
+                                    input(type='text',name='percentage',placeholder='enter percentage')
+                                    input(type='text',name='maxcash',placeholder='maximum discount')
+                                div(id='cash')
+                                    input(type='text',name='cash',placeholder='Enter Cash To be discounted...')
+                        .row.mt-4
+                            .col-md-4
+                                label Date
+                                input(type='date',name='expiry',required)
+                        .row
+                            .col-md-12
+                                input.new-signup-btn(type='submit', name='addcoupen', value='Add Coupen')
+        .row.mt-5
+            .col-md-12
+                h2 Coupens
+        .row
+            each c in coupens
+                .col-md-12
+                    hr
+                    h6
+                        u
+                            b #{c.coupendetails.coupencode}
+                    p
+                        i #{c.coupendetails.description}
+                .col-md-12
+                    if(c.type.discountpercentage) 
+                        label Discount Percentage:&nbsp;&nbsp;&nbsp;
+                        b #{c.discountpercentage.percentage} %
+                        br
+                        label Maximum Amount:&nbsp;&nbsp;&nbsp;
+                        b &#8377; #{c.discountpercentage.maxcash}
+                    if(c.type.discountcash)
+                        label Discount Cash &nbsp;&nbsp;&nbsp;
+                        b  &#8377; #{c.discountcash.cash}
+                .col-md-12
+                    form(action='/admin/deletecoupen/'+c._id, method='post')
+                        input.new-signup-btn(type='submit', name='delete-coupen', value='Delete '+c.coupendetails.coupencode)
+    script(src='/javascripts/coupen/radio.js')
+    //- if errMsg
+    //- 	p #{errMsg}
+    //- if sucMsg
+    //- 	p #{sucMsg}
+    //- div.container
+    //- 	br
+    //- 	br
+    //- 	br
+    //- 	br
+    //- 	form(action='/admin/addcoupen', method='post')
+    //- 		table
+    //- 			tr
+    //- 				td New Coupen
+    //- 				td
+    //- 					input(type='text', name='coupenname', placeholder='new Coupen', required)
+    //- 			tr
+    //- 				td description
+    //- 				td
+    //- 					input(type='text', name='description', placeholder='enter details',required)
+    //- 			tr
+    //- 				td type
+    //- 				td
+    //- 					input(type='radio', name='percentage',onclick="yesnoCheck();",value='percentage',id='yescheck')
+    //- 				td
+    //- 					input(type='radio',name='percentage',onclick="yesnoCheck();",value='cash',id='nocheck') 
+    //- 			tr(id='percentage')
+    //- 				td enter percentage 
+    //- 				td 
+    //- 					input(type='text',name='percentage',placeholder='enter percentage')
+    //- 			tr
+    //- 				td enter maximum cash discount
+    //- 				td 
+    //- 					input(type='text',name='maxcash',placeholder='maximum discount')
+    //- 			tr(id='cash')
+    //- 				td enter cash amount
+    //- 				td 
+    //- 					input(type='text',name='cash',placeholder='amount in rs.')
+    //- 			tr
+    //- 				td expiry date
+    //- 				td 
+    //- 					input(type='date',name='expiry',required)
+    //- 			tr
+    //- 				td
+    //- 					input(type='submit', name='addcoupen', value='Add Coupen')
+    //- script(src='/javascripts/cash.js')

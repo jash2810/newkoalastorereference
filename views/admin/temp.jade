@@ -1,0 +1,9 @@
+extends ../layout
+
+block content
+	.container(style='margin-top:130px;')
+		form(action='/signup', method='post')
+			input(type='text', name='adminname', placeholder='username')
+			input(type='text', name='name')
+			input(type='password', name='password')
+			input(type='submit', name='submit', value='signup')

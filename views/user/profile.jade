@@ -1,0 +1,170 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		div.new-profile(id='box1')
+			.row
+				.col-md-12
+					h2 Your Profile
+			.row
+				.col-md-5
+					if (user.personal.image)
+						img(src='')
+					else
+						i.fa.fa-user
+				.col-md-7.new-profile-details
+					.row
+						.col-md-12
+							.new-info-label Name
+							.new-info #{user.personal.fullname}
+						.col-md-12
+							.new-info-label Email
+							.new-info #{user.personal.email}
+						.col-md-5
+							.new-info-label Contact No. 1
+							.new-info #{user.contact.contactNo1}
+						.col-md-5
+							.new-info-label Contact No. 2
+							.new-info #{user.contact.contactNo2}
+						.col-md-12
+							.new-info-label Address
+							.new-info 
+								if (user.delivery.address.house)
+									span #{user.delivery.address.house}
+								if (user.delivery.address.street1)
+									span , #{user.delivery.address.street1}
+								if (user.delivery.address.street2)
+									span , #{user.delivery.address.street2}
+								if (user.delivery.address.landmark)
+									span , #{user.delivery.address.landmark}
+								if (user.delivery.address.area)
+									span , #{user.delivery.address.area}
+								if (user.delivery.address.city)
+									span , #{user.delivery.address.city}
+								if (user.delivery.address.pincode)
+									span - #{user.delivery.address.pincode}
+								if (user.delivery.address.state)
+									span , #{user.delivery.address.state}
+								if (user.delivery.address.country)
+									span , #{user.delivery.address.country}
+					.row
+						.col-md-4
+							button(type='button', name='viewaddresses', onclick='viewaddresses()').mybuttonprofile View Addresses
+						.col-md-4
+							button(type='button', onclick='editprofile()', name='editprofile', value='Edit Profile').mybuttonprofile Edit Profile
+						.col-md-4
+							if (user.gmail_login == false)
+								a(href='/users/change-password').mybuttonlinkprofile Change Password		
+		div.new-signup(id='box2')
+			form(name='edit profile', action='/users/editprofile/'+user._id, method='post')
+				h2 Edit Profile
+				.row
+					.col-md-6
+						label Name: 
+						br
+						input(type='text', name='fullname', value=user.personal.fullname, placeholder='Full Name',pattern='[a-zA-Z]+[ ]?[a-zA-Z]*',title='Only alphabets are allowed with maximum one space',required)
+				.row
+					.col-md-6
+						label Contact No. 1
+						br
+						input(type='text', name='contact1', value=user.contact.contactNo1, placeholder='Contact 1',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed',required)
+					.col-md-6
+						label Contact No. 2
+						br
+						input(type='text', name='contact2', value=user.contact.contactNo2, placeholder='Contact 2',pattern='[0-9]{10}',title='only 10 digit mobile no. is allowed')
+				.row
+					.col-md-6
+						label Delivery Address:
+						each a, index in user.address
+							input(type='radio', name='addressindex', value=index, required)
+							label.addresses #{a.house} #{a.street1} #{a.street2} #{a.landmark} #{a.area} #{a.city} #{a.pincode} #{a.state} #{a.country}
+				.row
+					.col-md-3
+						input.mybuttonprofile(type='submit', name='submit', value='Update')
+						input.mybuttonprofile(type='button', name='back', value='back', onclick='backFunc()', style='margin-top: 0;')
+		div.new-profile(id='box3')
+			h2 Addresses
+			each a, index in user.address
+				.row
+					.col-md-12
+						.new-info-label Address #{index+1}
+						.new-info
+							if (a.house)
+								span #{a.house}
+							if (a.street1)
+								span , #{a.street1}
+							if (a.street2)
+								span , #{a.street2}
+							if (a.landmark)
+								span , #{a.landmark}
+							if (a.area)
+								span , #{a.area}
+							if (a.city)
+								span , #{a.city}
+							if (a.pincode)
+								span - #{a.pincode}
+							if (a.state)
+								span , #{a.state}
+							if (a.country)
+								span , #{a.country}
+				form(action='/users/delete-address', method='post')
+					input(type='hidden', name='address', value=a.house)
+					input.mybuttonprofile(type='submit', name='delete address', value='Delete')
+			.new-signup
+				h2 Add New Address
+				form(action='/users/newaddress', method='post')
+					.row
+						.col-md-6
+							label House No: 
+							br
+							input(type='text', name='house', placeholder='House Number')
+					.row
+						.col-md-6
+							label Street 1
+							br
+							input(type='text', name='street1', placeholder='Enter street 1')
+						.col-md-6
+							label Street 2
+							br
+							input(type='text', name='street2', placeholder='Enter Street 2')
+					.row
+						.col-md-6
+							label Landmark
+							br
+							input(type='text', name='landmark', placeholder='Enter nearby landmark')
+					.row
+						.col-md-6
+							label Area
+							br
+							input(type='text', name='area', placeholder='Enter Area')
+						.col-md-6
+							label Pincode: 
+							br
+							input(type='text', name='pincode', placeholder='Enter Pincode')
+					.row
+						.col-md-4
+							label City
+							br
+							input(type='text', name='city', placeholder='Enter City')
+						.col-md-4
+							label State
+							br
+							input(type='text', name='state', placeholder='Enter State', disabled, value='Gujarat')
+						.col-md-4
+							label Country
+							br
+							input(type='text', name='country', placeholder='Enter Country', disabled, value='India')
+					.row
+						.col-md-4
+							input.mybuttonprofile(type='submit', name='newaddresssubmit', value='add new address')
+						.col-md-4
+							input.mybuttonprofile(type='button', name='back', value='back', onclick='backFunc()')
+		script(src='/javascripts/profile.js')

@@ -1,0 +1,44 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.border
+			h2 Your Details
+			h5 Name: #{admin.name}
+			h5 Admin Name: #{admin.adminname}
+		button(onclick='addAdminForm()', value='Add New Admin', name='addadminbutton') Add New Admin
+		button(onclick='changePasswordForm()', value='Change Password', name='change password') Change Password
+		br
+		br
+		div(id='box-2')
+			form(name='addadmin', action='/admin/addnewadmin', method='post')
+				label Fullname: 
+				input(type='text', name='name', placeholder='Enter Fullname', required)
+				br
+				label Adminname: 
+				input(type='text', name='adminname', placeholder='Enter Adminname', required)
+				br
+				label Password:
+				input(type='password', name='password', placeholder='Enter Password', required)
+				br
+				input(type='submit', name='submit', value='Add Admin')
+				button(type='button', onclick='canceladdadminform()') Cancel
+		div(id='box-3')
+			form(name='change-password', action='/admin/change-password', method='post')
+				label Current Password: 
+				input(type='password', name='currentpassword', placeholder='Enter Current Password', required)
+				br
+				label New Password:
+				input(type='password', name='newpassword', placeholder='Enter New Password', required)
+				br
+				input(type='submit', name='submit', value='Update Password')
+				button(type='button', onclick='canceladdadminform()') Cancel
+	script(src='/javascripts/add-admin.js')

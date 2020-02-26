@@ -1,0 +1,59 @@
+extends ../layout
+
+block content
+	- var totalpayment = 0;
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		if productlistlength == 0
+			h5 oops! Your cart is empty...
+			center
+				.mt-5(style='margin: auto;') 
+					a.continue-shopping(href='/users/welcome') Continue Shopping &nbsp;
+						span 
+							i.fa.fa-arrow-right
+		else
+			each p in products
+				- totalpayment = totalpayment + p.finalprice
+				.product-display-page.mb-5
+					.row
+						.col-md-5
+							img.productpg-image(src='/images/products/'+p.image)
+						.col-md-7
+							.row
+								.col-6
+									h5.product-display-page-name #{p.name}
+								.col-6
+									h4(style='').float-right &#8377;#{p.finalprice}
+								.col-md-12
+									h6 #{p.category}
+							hr
+							.row.mt-4.mb-4
+								.col-md-4
+									span.size Color: &nbsp;
+									span.color #{p.color}
+								.col-md-4
+									span.size Quantity: &nbsp;
+									span.color #{p.quantity}
+								.col-md-4
+									span.size Size: &nbsp;
+									span.color #{p.size}
+							hr
+							.row.mt-5
+								.col-md-12
+									form(action='/users/remove-from-cart/'+p.productid)
+										input.new-mybutton-addtocart(type='submit', value='Remove From Cart', style='width: 300px;')
+			hr
+			br
+			.row
+				.col-md-12
+					center
+						h4 Total Amount to Pay: #{totalpayment}
+						br
+						a.mybuttonlinkprofile(href='/users/checkout') Checkout

@@ -1,0 +1,148 @@
+doctype html
+html
+	head
+		title #{title}
+		link(rel='icon', type='image/png', href='/images/logo/koalalogo1.png')
+		//- link(rel="icon" href="/images/logo/navbarlogo.png" type="image/gif" sizes="16x16")
+		link(rel='stylesheet', href='/stylesheets/style8.css')
+		link(rel='stylesheet', href='/font-awesome-4.7.0/css/font-awesome.min.css')
+		//- my js
+		script(src='/javascripts/products.js')
+		//- JQuery
+		script(src='/stylesheets/bootstrap4/js/jquery.3.3.1.js')
+		link(rel='stylesheet', href='/stylesheets/bootstrap4/css/bootstrap.min.css')
+		script(src='/stylesheets/bootstrap4/js/bootstrap.min.js')
+		script(src='/stylesheets/bootstrap4/js/bootstrap.bundle.min.js')
+		script(src='/stylesheets/bootstrap4/js/popper.js')
+		script(src='/stylesheets/bootstrap4/js/bootstrap.js')
+		script(src='/javascripts/ui/navbar/navbar.js')
+		script(src='/javascripts/goback.js')
+		//- aos for animation
+		//- link(rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" )
+		//- mdb bootstrap
+		link(rel='stylesheets', href='/stylesheets/MDB-Free_4.5.10/css/bootstrap.min.css')
+		link(rel='stylesheets', href='/stylesheets/MDB-Free_4.5.10/css/mdb.min.css')
+		link(rel='stylesheets', href='/stylesheets/MDB-Free_4.5.10/css/style.min.css')
+		//- cards
+		script(src='/javascripts/ui/cardd.js')
+		meta(name="viewport", content="width=device-width, initial-scale=1")
+		//- gtag google analytics
+		script(async, src='https://www.googletagmanager.com/gtag/js?id=UA-126646792-1')
+		script(src='/javascripts/googleanalytics/gtag.js')
+		//- new carousel
+		meta(charset='utf-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1')
+		link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css')
+		script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+		script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js')
+		script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js')
+	body
+		nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top(style='padding: 0;')
+			a.navbar-brand(href='/', style='')
+				//- img.navbar-logo(src='/images/logo/navbarlogo.jpg')
+				img.navbar-logo(src='/images/logo/navbarlogo.png')
+			if (user_cookie)
+				a.mynavbar-link-mini(href='/users/cart') 
+					i.fa.fa-shopping-cart
+						.badge.badge-pill.my-cart-badge #{totpro}
+				a.mynavbar-link-mini(href='/users/profile') 
+					i.fa.fa-user
+			else if (admin_cookie)
+				a.mynavbar-link-mini(href='/admin/profile') 
+					i.fa.fa-user
+			button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarSupportedContent', aria-controls='navbarSupportedContent', aria-expanded='false', aria-label='Toggle navigation', style='position: relative;right: 0px;')
+				span.navbar-toggler-icon
+			.collapse.navbar-collapse(id='navbarSupportedContent')
+				if (user_cookie)
+					ul.navbar-nav.mr-auto
+						li.nav-item
+							a.nav-link(href='/users/welcome') Home
+						li.nav-item
+							a.nav-link(href='/users/orders') Orders
+					//- form(class="form-inline my-2 my-lg-0")
+					//- 	input(class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search")
+					//- 	button(class="btn btn-outline-success my-2 my-sm-0" type="submit") Search
+					ul.navbar-nav.mr-5
+						li.nav-item.fa-mynavitem-large
+							a.nav-link(href='/users/cart')
+								i.fa.fa-shopping-cart.fa-mynavicon-large
+									.badge.badge-pill.my-cart-badge #{totpro}
+						li.nav-item.fa-mynavitem-large
+							a.nav-link(href='/users/profile')
+								i.fa.fa-user.fa-mynavicon-large
+						li.nav-item
+							a.nav-link(href='/login/logout') Logout
+				else if (admin_cookie)
+					ul.navbar-nav.mr-auto
+						li.nav-item
+							a.nav-link(href='/admin/dashboard') Dashboard
+						li.nav-item
+							a.nav-link(href='/admin/category') Categories
+						li.nav-item
+							a.nav-link(href='/admin/name') Names
+						li.nav-item
+							a.nav-link(href='/admin/coupen') Coupens
+						li.nav-item
+							a.nav-link(href='/admin/products') Products
+						li.nav-item
+							a.nav-link(href='/admin/orders') Orders
+					ul.navbar-nav.mr-5
+						li.nav-item.fa-mynavitem-large
+							a.nav-link(href='/admin/profile')
+								i.fa.fa-user.fa-mynavicon-large
+						li.nav-item
+							a.nav-link(href='/login/logout') Logout
+				else
+					ul.navbar-nav.mr-auto
+					ul.navbar-nav.mr-5
+						li.nav-item
+							a.nav-link(href='/login') Login
+		block content
+		footer.page-footer.font-small.blue.pt-4.my-footer
+			center
+				h4.footer-message(style='') koalastore.in loves you!
+			.container-fluid.text-center.text-md-left(style='width: 90%;margin: auto;padding: 100px 0 0 0;')
+				.row
+					.col-md-4.mt-md-0.mt-3(data-aos='fade-up', data-aos-duration=500)
+						//- content
+						.mt-3
+							a.my-social-icon.my-social-icon-facebook(href='#')
+								i.fa.fa-facebook.fa-2x
+							a.my-social-icon.my-social-icon-instagram(href='#')
+								i.fa.fa-instagram.fa-2x
+							a.my-social-icon.my-social-icon-googleplus(href='#')
+								i.fa.fa-google-plus.fa-2x
+					hr.clearfix.w-100.d-md-none.pb-3
+					.col-md-3.mb-md-0.mb-3(data-aos='fade-up', data-aos-duration=500)
+						h5.text-uppercase KNOW US
+						ul.list-unstyled
+							if (user_cookie)
+								li 
+									a(href='/users/contact-us') Contact Us
+								li 
+									a(href='/users/about-us') About Us
+							else if (admin_cookie)
+								li 
+									a(href='/admin/contact-us') Contact Us
+								li 
+									a(href='/admin/about-us') About Us
+							else
+								li 
+									a(href='/general/contact-us') Contact Us
+								li 
+									a(href='/general/about-us') About Us
+					.col-md-5.mb-md-0.mb-3(data-aos='fade-up', data-aos-duration=500)
+						h5.text-uppercase Our Details
+						ul.list-unstyled
+							li
+								span Email 
+								a(href='mailto:koalatechnical@gmail.com') koalatechnical@gmail.com
+							li 
+								span Contact
+								a(href='#') +91 8734804914
+				footer-copyright.text-center.py-3 © 2018 Copyright: 
+					a(href='https://www.koalastore.in') koalastore.in
+		script(src='/javascripts/ui/filters/sort.js')
+		script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js")
+		//- script(src="https://unpkg.com/aos@next/dist/aos.js")
+		//- script(src='/javascripts/aosinit.js')

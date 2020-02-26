@@ -1,0 +1,77 @@
+extends ../layout
+
+block content
+	.container(style='margin-top: 130px;')
+		if (errMsg != '')
+			.error-msg
+				i.fa.fa-times-circle 
+				span  #{errMsg}
+		if (sucMsg != '')
+			.success-msg
+				i.fa.fa-check
+				span  #{sucMsg}
+		.row
+			each p, pindex in products
+				.my-souled-card.col-md-3.col-6
+					a.my-souled-card-anchor(href='/users/product/'+p._id)
+						img.my-souled-card-image-normal(src="/images/products/"+p.property.image, style="width:100%")
+						img.my-souled-card-image-model(src='/images/products/hogwarts1.jpg', style='width: 100%;')
+						.my-souled-card-name #{p.details.name}
+						.row
+							.col-md-6.col-6
+								span.my-souled-card-type #{p.details.category}
+							.col-md-6.col-6
+								span.my-souled-card-price Rs. #{p.price.finalprice}/-
+				//- div(class="make-3D-space my-3dcard", data-aos='zoom-in-up', data-aos-duration=600)
+				//- 	div(class="product-card")
+				//- 		div(class="product-front")
+				//- 			div(class='shadow')
+				//- 			img(src="/images/products/"+p.property.image, alt="", style='width: 100%;')
+				//- 			div(class="image_overlay")
+				//- 			a(href='/users/product/'+p._id)
+				//- 				div(class="view_details") View details
+				//- 			div(class="stats")
+				//- 				div(class="stats-container")
+				//- 					span() #{p.details.name}
+				//- 					span.float-right
+				//- 						del &#8377; #{p.price.originalprice}
+				//- 						br
+				//- 						span.final-price-3dcard &#8377; #{p.price.finalprice}
+				//- 					.product-options
+				//- 					.my-product-details-3dcard
+				//- 						b Color: 
+				//- 							span #{p.property.color}
+				//- 						br       
+				//- 						b Size:                 		
+				//- 							span #{p.property.size}
+					//- .mycard
+					//- 	img(src="/images/products/"+p.property.image, style="width:100%")
+					//- 	center
+					//- 		h3 #{p.details.name}
+					//- 	p
+					//- 		span Color: #{p.property.color}
+					//- 		br
+					//- 		span Size: #{p.property.size}
+					//- 		br
+					//- 	p
+					//- 		span Price: &nbsp;
+					//- 			del #{p.price.originalprice}/- &#8377;
+					//- 			span &nbsp; #{p.price.discount}% off
+					//- 			br
+					//- 			center
+					//- 				span
+					//- 					b #{p.price.finalprice}/- &#8377;
+					//- 	a(class="mybuttonlink", href='/users/product/'+p._id) view details
+			//- each p, pindex in products
+			//- 	.col-sm-4(style='margin-bottom: 50px;')
+			//- 		a(href='/users/product/'+p._id)
+			//- 			span #{pindex+1} : #{p.details.name}
+			//- 			br
+			//- 			img.product-img(src='/images/products/'+p.property.image)
+			//- 			br
+			//- 			span 
+			//- 				s #{p.price.originalprice}
+			//- 				span - #{p.price.discount}% off
+			//- 			br
+			//- 			span #{p.price.finalprice}/-
+			//- 			br
